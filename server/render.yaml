@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: youtube-summarizer-backend
+    env: python
+    plan: free
+    buildCommand: ""
+    startCommand: gunicorn app:app
+    envVars:
+      - key: SUPABASE_URL
+        value: https://uboktahvhxayffeneyng.supabase.co
+      - key: SUPABASE_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVib2t0YWh2aHhheWZmZW5leW5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcxMzAxNTUsImV4cCI6MjA2MjcwNjE1NX0.1FHeluusRaFWJZpGfM1Snn4d-2EECfix_hA1Lgr0nko

@@ -1,0 +1,90 @@
+<!-- public/popup.html (Rewritten with Bootstrap) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Summarizer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light text-dark p-3">
+  <div class="container">
+    <h2 class="text-center mb-4">YouTube Video Summarizer</h2>
+
+    <!-- Summary Options -->
+    <div class="mb-3">
+      <label for="summary-length" class="form-label">Select summary length:</label>
+      <select id="summary-length" class="form-select">
+        <option value="short">Short</option>
+        <option value="medium">Medium</option>
+        <option value="detailed">Detailed</option>
+      </select>
+    </div>
+
+    <!-- Language -->
+    <div class="mb-3">
+      <label for="language-selection" class="form-label">Select language:</label>
+      <select id="language-selection" class="form-select">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="es">Spanish</option>
+        <option value="de">German</option>
+      </select>
+    </div>
+
+    <!-- Summary Output -->
+    <div class="mb-4">
+      <h5>Summary</h5>
+      <div id="summary-display" class="border rounded p-3 bg-white text-dark" style="min-height: 120px;"></div>
+    </div>
+
+    <!-- Highlights -->
+    <div class="mb-4">
+      <h5>Timestamped Highlights</h5>
+      <div id="highlights-list" class="border rounded p-3 bg-white text-dark"></div>
+    </div>
+
+    <!-- Keywords -->
+    <div class="mb-4">
+      <h5>Keywords</h5>
+      <div id="keywords-list" class="border rounded p-3 bg-white text-dark"></div>
+    </div>
+
+    <!-- AI Questions -->
+    <div class="mb-4">
+      <h5>AI-Generated Questions</h5>
+      <div id="questions-list" class="border rounded p-3 bg-white text-dark"></div>
+    </div>
+
+    <!-- Download Button -->
+    <div class="mb-4 text-center">
+      <button id="download-summary" class="btn btn-outline-primary">Download Summary (.txt)</button>
+    </div>
+
+    <!-- Text-to-Speech Button -->
+    <div class="mb-4 text-center">
+      <button id="play-voice-summary" class="btn btn-outline-secondary">Listen to Summary</button>
+    </div>
+
+    <!-- Feedback -->
+    <div class="mb-4">
+      <h5>Feedback</h5>
+      <div class="mb-2">
+        <button id="upvote" class="btn btn-success me-2">👍</button>
+        <button id="downvote" class="btn btn-danger">👎</button>
+      </div>
+      <textarea id="feedback-input" rows="3" class="form-control mb-2" placeholder="Any suggestions?"></textarea>
+      <button id="submit-feedback" class="btn btn-primary w-100">Submit Feedback</button>
+    </div>
+
+    <!-- Related Content (Optional) -->
+    <div class="mb-4">
+      <h5>Related Content</h5>
+      <div id="related-content-list" class="border rounded p-3 bg-white text-dark"></div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
