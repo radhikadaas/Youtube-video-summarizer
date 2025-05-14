@@ -4,8 +4,10 @@ from transformers import pipeline
 import uuid
 import os
 import requests
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, origins="*", supports_credentials=True)
 
 summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
@@ -18,6 +20,10 @@ def seconds_to_timestamp(seconds):
     mins = int(seconds // 60)
     secs = int(seconds % 60)
     return f"{mins:02}:{secs:02}"
+
+@app.route("/")
+def health():
+    return "YouTube Summarizer backend running ✅", 200
 
 @app.route('/api/summarize', methods=['POST'])
 def summarize():
@@ -57,7 +63,7 @@ def summarize():
         })
 
     except Exception as e:
-        return jsonify({ "error": str(e) }), 500
+        return jsonify({"error": "Transcript not available. Try another video."}), 429
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "https://uboktahvhxayffeneyng.supabase.co")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVib2t0YWh2aHhheWZmZW5leW5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcxMzAxNTUsImV4cCI6MjA2MjcwNjE1NX0.1FHeluusRaFWJZpGfM1Snn4d-2EECfix_hA1Lgr0nko")
