@@ -18,15 +18,25 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentVideoId = "";
   let feedbackState = null;
 
+  // fallback: manually extract videoId from URL if Chrome extension messaging fails
+  function extractVideoIdFromUrl(url) {
+    try {
+      const urlObj = new URL(url);
+      return urlObj.searchParams.get("v") || "";
+    } catch (err) {
+      return "";
+    }
+  }
+
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, { type: "GET_VIDEO_ID" }, (res) => {
-      if (res?.videoId) {
-        currentVideoId = res.videoId;
-        fetchAndDisplaySummary();
-      } else {
-        summaryDisplay.innerText = "Could not retrieve video ID.";
-      }
-    });
+    const url = tabs[0]?.url || "";
+    const videoId = extractVideoIdFromUrl(url);
+    if (videoId) {
+      currentVideoId = videoId;
+      fetchAndDisplaySummary();
+    } else {
+      summaryDisplay.innerText = "Could not retrieve video ID.";
+    }
   });
 
   summaryLengthEl.addEventListener("change", fetchAndDisplaySummary);
@@ -53,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch(err => {
         summaryDisplay.innerText = "Error generating summary.";
-        console.error(err);
+        console.error("Summary Fetch Error:", err);
       });
   }
 
@@ -90,6 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
     })
       .then(res => res.json())
       .then(() => alert("Feedback submitted!"))
-      .catch(err => alert("Failed to submit feedback"));
+      .catch(err => {
+        console.error("Feedback Error:", err);
+        alert("Failed to submit feedback");
+      });
   });
 });
